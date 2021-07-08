@@ -1,8 +1,8 @@
 <?php
 session_start();
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 date_default_timezone_set('Asia/Tokyo');
-$app = new \Slim\App([
+$app = new Slim\App([
 'settings' => [
        'displayErrorDetails' => true,
 ]
