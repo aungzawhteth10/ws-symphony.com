@@ -18,3 +18,6 @@ $container['view'] = function ($container) {
    ));
    return $view;
 };
+$container['ApiDeployTest'] = function () {
+   return new App\Api\ApiDeployTest();
+};
