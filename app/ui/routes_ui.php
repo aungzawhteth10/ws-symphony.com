@@ -1,4 +1,4 @@
 <?php
 $app->get('/', function ($request, $response) {
-    return 'Api Get';
+    return $this->view->render($response, 'index.twig', []);
 });
