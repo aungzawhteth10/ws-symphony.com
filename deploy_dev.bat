@@ -1,0 +1,1 @@
+php -S localhost:8888 -t C:\Users\aungz\Desktop\workspace\ws-symphony.com\git\ws-symphony.com
