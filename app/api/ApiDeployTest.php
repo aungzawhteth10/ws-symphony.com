@@ -1,5 +1,5 @@
 <?php
-namespace App\Api;
+namespace App\api;
 class ApiDeployTest extends ApiBase
 {
     /*
