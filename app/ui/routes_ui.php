@@ -3,7 +3,7 @@ $app->get('/', function ($request, $response) {
     return 'ws-symphony';
     return $this->view->render($response, 'index.twig', []);
 });
-$app->get('/aaa', function ($request, $response, $args) {
+$app->get('ws-symphony.com/aaa', function ($request, $response, $args) {
     return 'get AAA';
 });
 // $app->get('/{id}', function ($request, $response, $args) {
