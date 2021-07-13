@@ -2,6 +2,9 @@
 $app->get('/info4u/', function ($request, $response) {
     return $this->viewInfo4u->render($response, 'index.twig', []);
 });
+$app->get('/', function ($request, $response) {
+    return redirect('/info4u/');
+});
 $app->get('/info4u', function ($request, $response) {
     return redirect('/info4u/');
 });
