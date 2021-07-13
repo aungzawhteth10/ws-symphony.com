@@ -11,7 +11,11 @@ $app->get('/info4u', function ($request, $response) {
 $app->get('/info4u/{id}', function ($request, $response, $args) {
     return $this->viewInfo4u->render($response, $args['id'] . '.twig', []);
 });
-
+/*
+ * リダイレクトする
+ * @param  String リダイレクトするURL
+ * @return String リダイレクトスクリプト
+ */
 function redirect ($url) 
 {
     return '<script>location.href= "'. $url . '"</script>';
