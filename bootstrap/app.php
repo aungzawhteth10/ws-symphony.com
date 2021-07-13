@@ -8,16 +8,3 @@ $app = new \Slim\App([
 ]
 ]);
 $container = $app->getContainer();
-$container['view'] = function ($container) {
-   $view = new \Slim\Views\Twig(__DIR__ . '/../app/templates/', [
-       'cache' => false,
-   ]);
-   $view->addExtension(new \Slim\Views\TwigExtension(
-       $container->router,
-       $container->request->getUri()
-   ));
-   return $view;
-};
-$container['ApiDeployTest'] = function () {
-   return new \App\api\ApiDeployTest;
-};

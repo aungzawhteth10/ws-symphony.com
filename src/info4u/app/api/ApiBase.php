@@ -1,5 +1,5 @@
 <?php
-namespace App\Api;
+namespace info4u\api;
 class ApiBase 
 {
    protected $session;

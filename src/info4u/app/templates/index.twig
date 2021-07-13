@@ -16,7 +16,7 @@
     ]};
     var logic = {
         init:function() {
-            $$("btn_book_register").attachEvent("onItemClick", function(){logic.pageMove("page_test");});
+            $$("btn_book_register").attachEvent("onItemClick", function(){logic.pageMove("info4u/page_test");});
             $$("btn_book_manage").attachEvent("onItemClick", function(){webix.ajax().post("Api/ApiDeployTest/post", {});});
             $$("btn_book_rental").attachEvent("onItemClick", function(){logic.pageMove("BookRental");});
         },
