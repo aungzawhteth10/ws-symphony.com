@@ -7,6 +7,6 @@ class ApiDeployTest extends ApiBase
      */
     public function post ($request, $response)
     {   
-        return 'Post Successful Auto Deploy Test';
+        return 'Post Successful Auto Deploy Test...';
     }
 }
