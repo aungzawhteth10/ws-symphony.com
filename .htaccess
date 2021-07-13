@@ -2,3 +2,6 @@
     RewriteCond %{Request_Filename} !-F
     RewriteCond %{Request_Filename} !-d
     RewriteRule ^ index.php [L]
+    RewriteCond %{HTTP_HOST} ^ws-symphony\\.com [NC] 
+    RewriteCond %{SERVER_PORT} 80 
+    RewriteRule ^(.*)$ https://www.ws-symphony.com/$1 [R,L]
