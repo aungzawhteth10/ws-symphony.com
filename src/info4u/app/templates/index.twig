@@ -1,35 +1,26 @@
 {% include "base.html"%}
 {% set screen_data = screen_data %}
 <script >
-    var form = {
-        view:"form",
-        id:"form",
-        borderless:true,
-        elements:[
-            {cols:[
-                {},
-                {view:"button", id:"btn_book_register", value:"書籍登録" , css:"webix_primary", height:50},
-                {view:"button", id:"btn_book_manage", value:"書籍管理" , css:"webix_primary", height:50},
-                {view:"button", id:"btn_book_rental", value:"レンタル情報" , css:"webix_primary", height:50},
-                {}
-            ]}
-    ]};
-    var logic = {
-        init:function() {
-            $$("btn_book_register").attachEvent("onItemClick", function(){logic.pageMove("info4u/page_test");});
-            $$("btn_book_manage").attachEvent("onItemClick", function(){webix.ajax().post("Api/ApiDeployTest/post", {});});
-            $$("btn_book_rental").attachEvent("onItemClick", function(){logic.pageMove("BookRental");});
-        },
-        pageMove:function(page) {
-            WSS.pageMove(page);
-        }
-    };
-    webix.ready(function () {
-        webix.ui(
-            {rows:[
-                form,
-            ]}
-        );
-        logic.init();
-    });
+  var form = {
+    view:"form",
+    id:"form",
+    borderless:true,
+    elements:[
+      {view:"button", id:"btn_o2_info", value:"အောက်စီဂျင်" , css:"webix_primary", height:50, click:function(){logic.pageMove("info4u/o2_info");}}
+  ]};
+  var logic = {
+    init:function() {
+    },
+    pageMove:function(page) {
+      WSS.pageMove(page);
+    }
+  };
+  webix.ready(function () {
+    webix.ui(
+      {rows:[
+        form,
+      ]}
+    );
+    logic.init();
+  });
 </script>

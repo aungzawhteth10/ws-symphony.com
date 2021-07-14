@@ -7,15 +7,8 @@ WSS.updateSession = function(session) {
     WSS.session = session;
     webix.storage.session.put('session', session);
 };
-WSS.pageMove = function(page, session = {}) {
-    if(Object.keys(session).length != 0) {
-        WSS.POST("Api/ApiSession/update", session, function(text, data, xml) {
-            if(WSS.isAjaxError()) return false;
-            WSS.pageMove(page);
-        });
-    } else {
-        location.href= "/" + page;
-    }
+WSS.pageMove = function(page) {
+    location.href= "/" + page;
 };
 WSS.errorMessage = function(message) {
     webix.alert({
