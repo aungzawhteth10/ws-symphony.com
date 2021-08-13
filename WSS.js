@@ -1,5 +1,6 @@
 var WSS = WSS || {};
 WSS.session = {};
+WSS.token = "";
 WSS.init = function() {
     
 };
@@ -8,7 +9,8 @@ WSS.updateSession = function(session) {
     webix.storage.session.put('session', session);
 };
 WSS.pageMove = function(page) {
-    location.href= "/" + page;
+    var token = webix.storage.session.get('token');
+    location.href = "/" + page + "?token=" + token;
 };
 WSS.errorMessage = function(message) {
     webix.alert({

@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title class="title">
-        info4u
+        Messenger
     </title>
-    <link rel="icon" type="image/gif/png" href="../src/info4u/images/icon.png">
+    <link rel="icon" type="image/gif/png" href="../src/messenger/images/icon.png">
     <link rel="stylesheet" href="../webix/webix.css" type="text/css">
-    <link rel="stylesheet" href="../src/info4u/css/basic.css">
-    <link rel="stylesheet" href="../src/info4u/css/login.css">
-    <link rel="stylesheet" href="../src/info4u/css/info4u.css">
+    <link rel="stylesheet" href="../src/messenger/css/basic.css">
+    <link rel="stylesheet" href="../src/messenger/css/login.css">
+    <link rel="stylesheet" href="../src/messenger/css/messenger.css">
     <script src="../webix/webix.js" type="text/javascript"></script>
-    <script src="../webix_custom.js" type="text/javascript"></script>
+    <script src="../src/messenger/js/webix_custom.js" type="text/javascript"></script>
     <script src="../WSS.js" type="text/javascript"></script>
 </head>
 <body>
     <div class="banner">
         <div class="logo">
         </div>
-        <h2 class="title">Info4u</h2>
+        <h2 class="title">Messenger</h2>
     </div>
 </body>
 <script>
+    WSS.updateSession({{session|raw}});
 </script>

@@ -1,0 +1,76 @@
+{% include "base.html"%}
+{% set screen_data = screen_data %}
+<style>
+/*.webix_ss_header .webix_hcell {
+  display: none !important;
+}
+div.webix_ss_header {
+  display: none !important;
+}*/
+.webix_column .webix_first {
+  display: none !important;
+}
+</style>
+<script >
+  var form = {
+    view:"form",
+    id:"form",
+    borderless:true,
+    elements:[
+      {rows:[
+        {cols:[
+          {view:"label", label:"အမည် : {{user_name}}"},
+          {},
+          {view:"label", id:"row_count", name:"row_count", label:"Total : 0", align:"right", width:100}
+        ]},
+        {
+          view:"cust_datatable",
+          id:"contactList",
+          hover:"myhover",
+          rowHeight:60,
+          tooltip:true,
+          columns:[
+            {id:"contact_id", hidden:true},
+            {id:"contact_name", header:["Contact", {content:"textFilter"}], fillspace:true},
+            {id:"status", header:["Status", {content:"selectFilter"}], width:100},
+          ],
+          on:{
+            "onAfterRender":function() {
+              $$("row_count").setValue("Total : " + this.count());
+            }
+          }
+        },
+      ]}
+  ]};
+  var logic = {
+    init:function() {
+      logic.dataload();
+      logic.dataSync();
+    },
+    dataload:function() {
+      WSS.GET("api/ApiHome", {}, function(text, data, xml) {
+        if(WSS.isAjaxError()) return false;
+        var scrollState = $$('contactList').getScrollState();
+        WSS.datatable.parse("contactList", text);
+        $$("contactList").scrollTo(scrollState.x, scrollState.y);
+      });
+    },
+    dataSync:function() {
+      timer = setInterval(function() { 
+          logic.dataload();
+      }, 5000);
+    },
+    pageMove:function(page) {
+      WSS.pageMove(page);
+    }
+  };
+  webix.ready(function () {
+    webix.ui(
+      {rows:[
+        form,
+        {height:60}
+      ]}
+    );
+    logic.init();
+  });
+</script>

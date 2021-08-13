@@ -4,7 +4,6 @@ webix.protoUI({
       leftSplit: 0,
       rightSplit: 0,
       topSplit: 0,
-      columnWidth: 100,
       sort: true,
       prerender: false,
       autoheight: false,

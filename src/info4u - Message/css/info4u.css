@@ -1,0 +1,39 @@
+input {
+    margin-left: 0px;
+}
+.webix_dtable .webix_ss_filter select, .webix_dtable .webix_ss_filter input {
+	border-radius: 40px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.webix_ss_header .webix_hcell {
+	background-color: #A5A4E3;
+	margin: 1px;
+}
+.webix_column .webix_cell {
+	margin: 1px;
+}
+.myhover{
+    background: #669DE3 !important;
+}
+.row_even {
+	background: #B4E8D9;
+}
+.webix_cell.webix_row_select {
+	background: #669DE3 !important;
+}
+.pageMove {
+	color: #8432D1;
+	text-decoration: underline;
+}
+.pageMove:hover {
+	cursor: pointer;
+}
+.webix_el_select select {
+	padding-left: 12px;
+	padding-right: 12px;
+}
+.webix_el_select select {
+	color: #475466;
+	border-color: #CCD7E6;
+}

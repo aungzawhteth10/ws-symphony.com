@@ -1,0 +1,26 @@
+{% include "base.html"%}
+{% set screen_data = screen_data %}
+<script >
+  var form = {
+    view:"form",
+    id:"form",
+    borderless:true,
+    elements:[
+      {view:"button", id:"btn_o2_info", value:"အောက်စီဂျင်" , css:"webix_primary", height:50, click:function(){logic.pageMove("info4u/o2_info");}}
+  ]};
+  var logic = {
+    init:function() {
+    },
+    pageMove:function(page) {
+      WSS.pageMove(page);
+    }
+  };
+  webix.ready(function () {
+    webix.ui(
+      {rows:[
+        form,
+      ]}
+    );
+    logic.init();
+  });
+</script>

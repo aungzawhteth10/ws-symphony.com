@@ -5,7 +5,7 @@
     },
     "autoload": {
         "psr-4": {
-            "info4u\\": "src/info4u/app/"
+            "messenger\\": "src/messenger/app"
         }
     }
 }

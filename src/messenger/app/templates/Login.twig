@@ -1,0 +1,68 @@
+{% include 'base.html' %}
+<style>
+.library_bk{
+    background-image: url('../images/library_bk.jpg');
+    background-size: 100% 100%;
+}
+</style>
+<script >
+    var loginForm = {
+        view:"form",
+        id:"loginForm",
+        borderless:true,
+        elements:[
+            {cols:[
+                {},
+                {width:340, rows:[
+                    {view:"label", label:"UserName"},
+                    {view:"text", id:"user_name", name:"user_name", label:" ", labelWidth:10},
+                    {view:"label", label:"Password"},
+                    {view:"text", id:"password", name:"password", label:" ", type:"Password", labelWidth:10},
+                    // {view:"label" , label:"<a href='https://www.google.com' style='color:#C8CAF6;'>Forgot password</a>", align:"right"},
+                    {cols:[
+                        {view:"button", value:"Login", css:"webix_primary", id:"login", height:50, hotkey: "enter"},
+                    ]},
+                    {}
+                ]},
+                {}
+            ]},
+        ],
+        rules:{
+            "user_name":webix.rules.isNotEmpty,
+            "password":webix.rules.isNotEmpty,
+        }};
+    webix.ui(
+        {rows:[
+            loginForm
+        ]}
+    );
+    webix.ready(function () {
+        logic.init();
+    });
+    var logic = {
+        init:function() {
+            $$("login").attachEvent("onItemClick", logic.login);
+        },
+        login:function() {
+            if (!$$("loginForm").validate()) {
+                WSS.errorMessage("UserName နဲ့ Password ကို ဖြည့်သွင်းပေးပါ");
+                return false;
+            }
+            var _user     = $$("user_name").getValue();
+            var _password = $$("password").getValue();
+            var _postData = {
+                "user_name": _user,
+                "password":_password
+            };
+            WSS.POST("api/ApiLogin/loginAuth", _postData, function(data) {
+                if (data == false) {
+                    WSS.errorMessage("UserName သို့  Password မှားယွင်းနေပါသည်");
+                    return false;
+                }
+                var obj = JSON.parse(data);
+                webix.storage.session.put('token', obj.token);
+                WSS.pageMove("messenger/Home");
+            });
+        }
+    };
+</script>

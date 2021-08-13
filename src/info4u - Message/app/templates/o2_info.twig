@@ -1,0 +1,29 @@
+{% include "base.html"%}
+{% set screen_data = screen_data %}
+<script >
+  var form = {
+  view:"form",
+  id:"form",
+  borderless:true,
+  elements:[
+    {cols:[
+      {view:"button", id:"mandalay", value:"မန္တလေး" , css:"webix_primary", height:50, click:function(){logic.pageMove("info4u/o2_division");}},
+      {view:"button", id:"yangon", value:"ရန်ကုန်" , css:"webix_primary", height:50, click:function(){logic.pageMove("info4u/o2_division");}}
+    ]}
+  ]};
+  var logic = {
+    init:function() {
+    },
+    pageMove:function(page) {
+      WSS.pageMove(page);
+    }
+  };
+  webix.ready(function () {
+    webix.ui(
+      {rows:[
+        form,
+      ]}
+    );
+    logic.init();
+  });
+</script>
