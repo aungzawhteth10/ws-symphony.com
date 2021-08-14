@@ -10,6 +10,7 @@ WSS.updateSession = function(session) {
 };
 WSS.pageMove = function(page) {
     var token = webix.storage.session.get('token');
+    alert(token);
     location.href = "/" + page + "?token=" + token;
 };
 WSS.errorMessage = function(message) {
