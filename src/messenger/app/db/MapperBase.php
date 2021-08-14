@@ -6,7 +6,14 @@ class MapperBase
     public function __construct()
     {
         try {
-            $this->pdo = $_SESSION['MessengerPdo'];
+            if (isset($_SESSION['MessengerPdo'])) {
+                $this->pdo = $_SESSION['MessengerPdo'];
+            } else {
+                $dsn = 'mysql:dbname=u460610115_messenger;host=sql255.main-hosting.eu';
+                $username = 'u460610115_messenger_root';
+                $password = 'Toorwss9199';
+                $this->pdo = new \PDO($dsn, $username, $password);
+            }
         } catch (\PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
