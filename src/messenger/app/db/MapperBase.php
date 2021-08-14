@@ -5,11 +5,8 @@ class MapperBase
     protected $pdo;
     public function __construct()
     {
-        $dsn = 'mysql:dbname=u460610115_messenger;host=sql255.main-hosting.eu';
-        $username = 'u460610115_messenger_root';
-        $password = 'Toorwss9199';
         try {
-            $this->pdo = new \PDO($dsn, $username, $password);
+            $this->pdo = $_SESSION['MessengerPdo'];
         } catch (\PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
