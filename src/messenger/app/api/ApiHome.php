@@ -34,7 +34,9 @@ class ApiHome extends ApiBase
             $dmContact->user_id = $contact_id;
             $contactResult = $dbContactMapper->find($dmContact);
             $contactAccessTime = $contactResult[0]['access_time'];
-            if ((int)substr((string)$timeNow, -3) - (int)substr((string)$contactAccessTime, -3) <= 5) {
+            $time_diff = $timeNow - (int)$contactAccessTime;
+            return $time_diff . '';
+            if ($timeNow - (int)$contactAccessTime <= 5) {
                 $result[] = [
                     'contact_id'   => $contact_id,
                     'contact_name' => '<span style="color:green; font-size:200%">●</span><span style="font-size:150%">' . $contactInfo[0]['user_name'] . '</span>',
