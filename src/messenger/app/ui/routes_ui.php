@@ -20,14 +20,32 @@ function _screenInit ($screenId, $token, $view, $response)
         $view->offsetSet('session', json_encode($sessionArr, JSON_UNESCAPED_UNICODE));
         return $view->render($response, 'Login.twig', $sessionArr);
     }
-    $dbLoginMapper = new \messenger\db\DbLoginMapper;
-    $dmLogin = new \messenger\model\DmLogin;
-    $dmLogin->token = $token;
-    $loginUser = $dbLoginMapper->find($dmLogin);
-    if (count($loginUser) == 0) {
+    $cache_file_path = getcwd() . '\src\messenger\app\files\cache\cache.json';
+    $cache = json_decode(file_get_contents($cache_file_path), TRUE);
+    if (isset($cache['loginTable'])) {
+        $loginTable = $cache['loginTable'];
+    } else {
+        $loginTable = $this->tablesData->getLoginTable();
+        $cache['loginTable'] = $loginTable;
+        $json_data = json_encode($cache, JSON_UNESCAPED_UNICODE);
+        file_put_contents($cache_file_path, $json_data);
+    }
+    $loginTableByUserId = array_column($loginTable, null, 'user_id');
+    error_log(print_r($_SESSION, true));
+    if (!isset($_SESSION['user_id'])) {
         return redirect('/messenger/Login');
     }
-    $timeLimit = $loginUser[0]['time_limit'];
+    $user_id = $_SESSION['user_id'];
+    error_log(print_r($user_id, true));
+    error_log(print_r($loginTableByUserId, true));
+    $loginUser = isset($loginTableByUserId[$user_id]) ? $loginTableByUserId[$user_id] : [];
+    if (count($loginUser) == 0) {
+        return false;
+    }
+    if ($loginUser['token'] != $token) {
+        return redirect('/messenger/Login');
+    }
+    $timeLimit = $loginUser['time_limit'];
     $timeNow = date('Y-m-d H:i:s');
     $kigen_gire = false;//false：期限切れではない
     if ($timeNow > $timeLimit) {//期限切れ

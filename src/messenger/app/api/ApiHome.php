@@ -5,102 +5,65 @@ class ApiHome extends ApiBase
    public function init($request, $response)
    {
         $user_id = $this->session['user_id'];
-        $dbContactMapper = new \messenger\db\DbContactMapper;
-        $dmContact = new \messenger\model\DmContact;
-        $dmContact->user_id = $user_id;
-        $contactUserResult = $dbContactMapper->find($dmContact);
-        if (count($contactUserResult) == 0) {
+        $cache_file_path = getcwd() . '\src\messenger\app\files\cache\cache.json';
+        $cache = json_decode(file_get_contents($cache_file_path), TRUE);
+        if (isset($cache['loginTable'])) {
+            $loginTable = $cache['loginTable'];
+        } else {
+            $loginTable = $this->tablesData->getLoginTable();
+            $cache['loginTable'] = $loginTable;
+        }
+        if (isset($cache['contactTable'])) {
+            $contactTable = $cache['contactTable'];
+        } else {
+            $contactTable = $this->tablesData->getContactTable();
+            $cache['contactTable'] = $contactTable;
+        }
+        error_log(print_r($cache, true));
+        $contactTableByUserId = array_column($contactTable, null, 'user_id');
+        if (!isset($contactTableByUserId[$user_id])) {
             return false;
         }
-        $contacts = explode('#', $contactUserResult[0]['contacts']);
-        error_log(print_r('user_id', true));
-        error_log(print_r(gettype($contactUserResult[0]['user_id']), true));
+        $contacts = $contactTableByUserId[$user_id]['contacts'];
+        $contacts = explode('#', $contacts);
         if (count($contacts) == 0) {
             return false;
         }
         $timeNow = time();
-        $dmContact->access_time = $timeNow;
-        $count = $dbContactMapper->update($dmContact);
-        $dmContact = new \messenger\model\DmContact;
+        $contactTableByUserId[$user_id]['access_time'] = $timeNow;
+        $cache['contactTable'] = array_values($contactTableByUserId);
         $result = [];
+        $loginTableByUserId = array_column($loginTable, null, 'user_id');
         foreach ($contacts as $key => $contact_id) {
-            $dbLoginMapper = new \messenger\db\DbLoginMapper;
-            $dmLogin = new \messenger\model\DmLogin;
-            $dmLogin->user_id = $contact_id;
-            $contactInfo = $dbLoginMapper->find($dmLogin);
+            if (!isset($loginTableByUserId[$contact_id])) {
+                continue;
+            }
+            $contactInfo = $loginTableByUserId[$contact_id];
             if (count($contactInfo) == 0) {
                 continue;
             }
-            $dmContact->user_id = $contact_id;
-            $contactResult = $dbContactMapper->find($dmContact);
-            $contactAccessTime = $contactResult[0]['access_time'];
+            if (!isset($contactTableByUserId[$contact_id])) {
+                continue;
+            }
+            $contactResult = $contactTableByUserId[$contact_id];
+            $contactAccessTime = $contactResult['access_time'];
             $time_diff = $timeNow - (int)$contactAccessTime;
             if ($timeNow - (int)$contactAccessTime <= 10) {
                 $result[] = [
                     'contact_id'   => $contact_id,
-                    'contact_name' => '<span style="color:green; font-size:200%">●</span><span style="font-size:150%">' . $contactInfo[0]['user_name'] . '</span>',
+                    'contact_name' => '<span style="color:green; font-size:200%">●</span><span style="font-size:150%">' . $contactInfo['user_name'] . '</span>',
                     'status'       => 'Online'
                 ];
             } else {
                 $result[] = [
                     'contact_id'   => $contact_id,
-                    'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">' . $contactInfo[0]['user_name'] . '</span>',
+                    'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">' . $contactInfo['user_name'] . '</span>',
                     'status'       => 'Offline'
                 ];
             }
         }
-        return json_encode($result, JSON_UNESCAPED_UNICODE);
-        // error_log(print_r($timeNow, true));
-        // $result = [
-        //     'token' => $token,
-        // ];
-        // $_SESSION['user_id']   = $loginUser[0]['user_id'];
-        // $_SESSION['user_name'] = $loginUser[0]['user_name'];
-        // $_SESSION['id_name']   = join('#', [$loginUser[0]['user_id'], $loginUser[0]['user_name']]);
-        $result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:green; font-size:200%">●</span><span style="font-size:150%">AZH</span>',
-            'status'       => 'Online'
-        ];
-        $result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">NRT</span>',
-            'status'       => 'Offline'
-        ];
-        $result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">NRT</span>',
-            'status'       => 'Offline'
-        ];$result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">NRT</span>',
-            'status'       => 'Offline'
-        ];$result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">NRT</span>',
-            'status'       => 'Offline'
-        ];$result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">NRT</span>',
-            'status'       => 'Offline'
-        ];$result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">NRT</span>',
-            'status'       => 'Offline'
-        ];$result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">NRT</span>',
-            'status'       => 'Offline'
-        ];$result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">NRT</span>',
-            'status'       => 'Offline'
-        ];
-        $result[] = [
-            'contact_id'   => 1,
-            'contact_name' => '<span style="color:green; font-size:200%">●</span><span style="font-size:150%">NRT</span>',
-            'status'       => 'Online'
-        ];
+        $json_data = json_encode($cache, JSON_UNESCAPED_UNICODE);
+        file_put_contents($cache_file_path, $json_data);
         return json_encode($result, JSON_UNESCAPED_UNICODE);
    }
    public function register($request, $response)
