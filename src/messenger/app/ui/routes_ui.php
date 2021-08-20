@@ -3,9 +3,9 @@ $app->get('/messenger', function ($request, $response) {
     $token = $_GET['token'] ?? 'zzz';
     return redirect('/messenger/Home', $token);
 });
-// $app->get('/messenger', function ($request, $response) {
-//     return redirect('/messenger/');
-// });
+$app->get('/messenger/', function ($request, $response) {
+    return redirect('/messenger');
+});
 $app->get('/messenger/{id}', function ($request, $response, $args) {
     $token = $_GET['token'] ?? 'zzz';
     return _screenInit($args['id'], $token, $this->viewMessenger, $response);
