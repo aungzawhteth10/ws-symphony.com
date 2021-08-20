@@ -15,6 +15,7 @@ $app->get('/messenger/{id}', function ($request, $response, $args) {
  */
 function _screenInit ($screenId, $token, $view, $response)
 {
+    $tablesData = new \messenger\common\TablesData;
     if (in_array($screenId, ['Login', 'login'])) {//ログイン画面の場合
         $sessionArr = $_SESSION;
         $view->offsetSet('session', json_encode($sessionArr, JSON_UNESCAPED_UNICODE));
@@ -25,7 +26,7 @@ function _screenInit ($screenId, $token, $view, $response)
     if (isset($cache['loginTable'])) {
         $loginTable = $cache['loginTable'];
     } else {
-        $loginTable = $this->tablesData->getLoginTable();
+        $loginTable = $tablesData->getLoginTable();
         $cache['loginTable'] = $loginTable;
         $json_data = json_encode($cache, JSON_UNESCAPED_UNICODE);
         file_put_contents($cache_file_path, $json_data);
