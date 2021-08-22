@@ -1,0 +1,105 @@
+{% include "base.html"%}
+{% set screen_data = screen_data %}
+<style>
+.message_left .webix_inp_textarea {
+  color: #1547f8 !important;
+  background-color: #e8f8d1 !important;
+  padding: 2px !important;
+}
+.message_right .webix_inp_textarea {
+  color: #1547f8 !important;
+  background-color: #efd3ce !important;
+  padding: 2px !important;
+}
+.webix_view > .webix_disabled {
+  cursor: default !important;
+}
+.webix_button {
+  margin: 0px !important;
+}
+.banner .logo, .banner .title, .banner {
+  height: 0px !important;
+  visibility: hidden !important;
+}
+.btn_back .webix_el_box .webix_button {
+  color: #ffffff !important;
+  background: #b2b6b8 !important;
+  font-size: 250%;
+}
+</style>
+<script>
+  var header = {rows:[
+    {cols:[
+      {view:"button", id:"btn_back", value:"<", css:"btn_back", width:50, height:50},
+      {view:"label", label:"{{contact_name}}"}
+    ]}
+  ]};
+  var message = {rows:[
+{% for message in messages %}
+{% if message.pos == 'message_left' %}
+    {cols:[
+      {view:"textarea", value:"{{message.message}}", width:280, height:{{message.height}}, readonly:true, css:"message_left"},
+      {}
+    ]},
+{% elseif message.pos == 'message_right' %}
+    {cols:[
+      {},
+      {view:"textarea", value:"{{message.message}}", width:280, height:{{message.height}}, readonly:true, css:"message_right"}
+    ]},
+{% endif %}
+{% endfor %}
+  ]};
+  var text_area = {rows:[
+    {view:"label", label:"စာလုံးရေ(၂၀၀)အထိသာ"},
+    {cols:[
+      {view:"textarea", id:"send_msg", name:"send_msg", value:"", height:100, attributes:{maxlength:200}},
+      {view:"button", id:"send_btn", value:"send", css:"webix_primary", width:100, height:100, click:function(){logic.send();}}
+    ]},
+  ]};
+
+  var form = {
+    view:"form",
+    id:"form",
+    borderless:true,
+    scroll:true,
+    elements:[
+      message
+    ]};
+  var logic = {
+    init:function() {
+      $$("form").scrollTo(0, 9000);
+      // logic.startTimer();
+    },
+    startTimer:function() {
+      timer = setInterval(function() { 
+          alert("5 seconds are up"); 
+      }, 5000);
+    },
+    send:function() {
+      var _postData = {
+        largest_message_no: {{largest_message_no}},
+        message: $$("send_msg").getValue(),
+      };
+      WSS.POST("api/ApiMessage/sendMessage", _postData, function(data) {
+        if (WSS.isAjaxError()) {
+            WSS.errorMessage("Send Failed");
+            return false;
+        }
+        WSS.pageMove("messenger/Message");
+      });
+    },
+    pageMove:function(page) {
+      WSS.pageMove(page);
+    }
+  };
+  webix.ready(function () {
+    webix.ui(
+      {rows:[
+        header,
+        form,
+        text_area,
+      ]}
+    );
+    logic.init();
+  });
+</script>

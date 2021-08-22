@@ -51,13 +51,15 @@ class ApiHome extends ApiBase
             if ($timeNow - (int)$contactAccessTime <= 10) {
                 $result[] = [
                     'contact_id'   => $contact_id,
-                    'contact_name' => '<span style="color:green; font-size:200%">●</span><span style="font-size:150%">' . $contactInfo['user_name'] . '</span>',
+                    'contact_name' => $contactInfo['user_name'],
+                    'contact_name_view' => '<span style="color:green; font-size:200%">●</span><span style="font-size:150%">' . $contactInfo['user_name'] . '</span>',
                     'status'       => 'Online'
                 ];
             } else {
                 $result[] = [
                     'contact_id'   => $contact_id,
-                    'contact_name' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">' . $contactInfo['user_name'] . '</span>',
+                    'contact_name' => $contactInfo['user_name'],
+                    'contact_name_view' => '<span style="color:grey; font-size:200%">●</span><span style="font-size:150%">' . $contactInfo['user_name'] . '</span>',
                     'status'       => 'Offline'
                 ];
             }

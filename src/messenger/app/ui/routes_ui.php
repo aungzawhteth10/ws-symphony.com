@@ -17,9 +17,7 @@ function _screenInit ($screenId, $token, $view, $response)
 {
     $tablesData = new \messenger\common\TablesData;
     if (in_array($screenId, ['Login', 'login'])) {//ログイン画面の場合
-        $sessionArr = $_SESSION;
-        $view->offsetSet('session', json_encode($sessionArr, JSON_UNESCAPED_UNICODE));
-        return $view->render($response, 'Login.twig', $sessionArr);
+        return _pageMove($view, $response, 'Login');
     }
     $cache_file_path = getcwd() . '\src\messenger\app\files\cache\cache.json';
     $cache = json_decode(file_get_contents($cache_file_path), TRUE);
@@ -37,8 +35,6 @@ function _screenInit ($screenId, $token, $view, $response)
         return redirect('/messenger/Login');
     }
     $user_id = $_SESSION['user_id'];
-    error_log(print_r($user_id, true));
-    error_log(print_r($loginTableByUserId, true));
     $loginUser = isset($loginTableByUserId[$user_id]) ? $loginTableByUserId[$user_id] : [];
     if (count($loginUser) == 0) {
         return false;
@@ -52,6 +48,17 @@ function _screenInit ($screenId, $token, $view, $response)
     if ($timeNow > $timeLimit) {//期限切れ
         return redirect('/messenger/Login');
     }
+    error_log(print_r($loginUser['token'], true));
+    if (in_array($screenId, ['Message', 'message'])) {//ログイン画面の場合
+        $contact_id = $_SESSION['contact_id'];
+        $contactUser = isset($loginTableByUserId[$contact_id]) ? $loginTableByUserId[$contact_id] : [];
+        $contact_name = count($contactUser) != 0 ? $contactUser['user_name'] : 'ContactName not found';
+        $apiMessage = new \messenger\api\ApiMessage;
+        $messages = $apiMessage->getMessages();
+        $messageNosArr = array_column($messages, 'message_no');
+        rsort($messageNosArr);
+        return _pageMove ($view, $response, 'Message', ['contact_name' => $contact_name, 'messages' => $messages, 'largest_message_no' => $messageNosArr[0] ?? 0]);
+    }
     $sessionArr = $_SESSION;
     // return $sessionArr;
     error_log(print_r($sessionArr, true));
@@ -59,26 +66,17 @@ function _screenInit ($screenId, $token, $view, $response)
     $view->offsetSet('session', json_encode($sessionArr, JSON_UNESCAPED_UNICODE));
     return $view->render($response, $screenId . '.twig', $sessionArr);
 }
-/*
- * Login画面へ遷移する
- */
-function _toLoginPage ()
-{
-    $url = '/Login';
-    $script = '<script>location.href="' . $url .'"</script>';
-    return $script;
-}
-/*
- * セッション情報を生成する
- */
-function _createSessionInfo ($screenId)
-{
-    $dbKinouMapper = new \messenger\db\DbKinouMapper;
-    $dmKinou = new \messenger\Model\DmKinou;
-    $dmKinou->screen_id = $screenId;
-    $kinou = $dbKinouMapper->find($dmKinou);
-    $dmSession = new \messenger\model\DmSession;
-    $dmSession->screen_name = (isset($kinou[0])) ? $kinou[0]['name'] : "未登録";
-    $result = $dmSession->toArray();
-    $_SESSION['screen_name'] = $dmSession->screen_name;
+
+function _pageMove ($view, $response, $screenId, $screenDataArr = [])
+{    
+    $sessionArr = $_SESSION;
+    $dataArr = [];
+    $dataArr = $sessionArr;
+    if (count($screenDataArr) != 0) {
+        $dataArr = array_merge($dataArr, $screenDataArr);
+    }
+    error_log(print_r($dataArr, true));
+    $view->offsetSet('HtmlHelper', new \messenger\api\HtmlHelper);
+    $view->offsetSet('session', json_encode($sessionArr, JSON_UNESCAPED_UNICODE));
+    return $view->render($response, $screenId . '.twig', $dataArr);
 }

@@ -8,10 +8,17 @@ WSS.updateSession = function(session) {
     WSS.session = session;
     webix.storage.session.put('session', session);
 };
-WSS.pageMove = function(page) {
+WSS.pageMove = function(page, session = {}) {
     var token = webix.storage.session.get('token');
-    alert(token);
-    location.href = "/" + page + "?token=" + token;
+    if(Object.keys(session).length != 0) {
+        WSS.POST("api/ApiSession/update", session, function(text, data, xml) {
+            if(WSS.isAjaxError()) return false;
+            WSS.pageMove(page);
+        });
+    } else {
+        var token = webix.storage.session.get('token');
+        location.href = "/" + page + "?token=" + token;
+    }
 };
 WSS.errorMessage = function(message) {
     webix.alert({
@@ -25,7 +32,9 @@ WSS.errorMessage = function(message) {
 WSS.GET = function(url, getData, cb) {
     webix.ajax().get(url, getData, {
         error:function(text, data, xml){
-            WSS.errorMessage(text);
+            if (text != "") {
+                WSS.errorMessage(text);
+            }
             WSS.AjaxError = true;
             cb(text, data, xml);
         },
@@ -38,7 +47,9 @@ WSS.GET = function(url, getData, cb) {
 WSS.POST = function(url, postData, cb) {
     webix.ajax().post(url, postData, {
         error:function(text, data, xml){
-            WSS.errorMessage(text);
+            if (text != "") {
+                WSS.errorMessage(text);
+            }
             WSS.AjaxError = true;
             cb(text, data, xml);
         },

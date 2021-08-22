@@ -31,12 +31,16 @@ div.webix_ss_header {
           tooltip:true,
           columns:[
             {id:"contact_id", hidden:true},
-            {id:"contact_name", header:["Contact", {content:"textFilter"}], fillspace:true},
+            {id:"contact_name_view", header:["Contact", {content:"textFilter"}], fillspace:true},
             {id:"status", header:["Status", {content:"selectFilter"}], width:100},
           ],
           on:{
             "onAfterRender":function() {
               $$("row_count").setValue("Total : " + this.count());
+            },
+            "onItemClick":function(id, e, trg){
+              var record = this.getItem(id.row);
+              logic.toMessage(record.contact_id);
             }
           }
         },
@@ -50,7 +54,7 @@ div.webix_ss_header {
     dataload:function() {
       WSS.GET("api/ApiHome", {}, function(text, data, xml) {
         if(WSS.isAjaxError()) return false;
-        var scrollState = $$('contactList').getScrollState();
+        var scrollState = $$("contactList").getScrollState();
         WSS.datatable.parse("contactList", text);
         $$("contactList").scrollTo(scrollState.x, scrollState.y);
       });
@@ -60,8 +64,8 @@ div.webix_ss_header {
           logic.dataload();
       }, 5000);
     },
-    pageMove:function(page) {
-      WSS.pageMove(page);
+    toMessage:function(contact_id) {
+      WSS.pageMove("messenger/Message", {"contact_id" : contact_id});
     }
   };
   webix.ready(function () {

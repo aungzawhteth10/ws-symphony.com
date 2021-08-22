@@ -1,5 +1,5 @@
 <?php
-namespace info4u\api;
+namespace messenger\api;
 class ApiDeployTest extends ApiBase
 {
     /*

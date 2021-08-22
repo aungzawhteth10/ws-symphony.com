@@ -18,3 +18,9 @@ $container['MessengerApiLogin'] = function () {
 $container['MessengerApiHome'] = function () {
     return new \messenger\api\ApiHome;
 };
+$container['MessengerApiSession'] = function () {
+    return new \messenger\api\ApiSession;
+};
+$container['MessengerApiMessage'] = function () {
+    return new \messenger\api\ApiMessage;
+};
