@@ -19,7 +19,7 @@ function _screenInit ($screenId, $token, $view, $response)
     if (in_array($screenId, ['Login', 'login'])) {//ログイン画面の場合
         return _pageMove($view, $response, 'Login');
     }
-    $cache_file_path = getcwd() . '\src\messenger\app\files\cache\cache.json';
+    $cache_file_path = getcwd() . '/src/messenger/app/files/cache/cache.json';
     $cache = json_decode(file_get_contents($cache_file_path), TRUE);
     if (isset($cache['loginTable'])) {
         $loginTable = $cache['loginTable'];
