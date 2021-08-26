@@ -49,7 +49,7 @@ function _screenInit ($screenId, $token, $view, $response)
         return redirect('/messenger/Login');
     }
     error_log(print_r($loginUser['token'], true));
-    if (in_array($screenId, ['Message', 'message'])) {//ログイン画面の場合
+    if (in_array($screenId, ['Message', 'message'])) {//ログイン画面の場合.
         $contact_id = $_SESSION['contact_id'];
         $contactUser = isset($loginTableByUserId[$contact_id]) ? $loginTableByUserId[$contact_id] : [];
         $contact_name = count($contactUser) != 0 ? $contactUser['user_name'] : 'ContactName not found';
