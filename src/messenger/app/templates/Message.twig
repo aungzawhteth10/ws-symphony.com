@@ -3,12 +3,12 @@
 <style>
 .message_left .webix_inp_textarea {
   color: #1547f8 !important;
-  background-color: #e8f8d1 !important;
+  background-color: #efd3ce !important;
   padding: 2px !important;
 }
 .message_right .webix_inp_textarea {
   color: #1547f8 !important;
-  background-color: #efd3ce !important;
+  background-color: #e8f8d1 !important;
   padding: 2px !important;
 }
 .webix_view > .webix_disabled {
@@ -31,6 +31,7 @@
   var header = {rows:[
     {cols:[
       {view:"button", id:"btn_back", value:"<", css:"btn_back", width:50, height:50},
+      {view:"label", id:"active_condition", label:"", align:"center", width:50},
       {view:"label", label:"{{contact_name}}"}
     ]}
   ]};
@@ -68,12 +69,24 @@
   var logic = {
     init:function() {
       $$("form").scrollTo(0, 9000);
-      // logic.startTimer();
+      logic.dataload();
+      logic.startTimer();
     },
     startTimer:function() {
       timer = setInterval(function() { 
-          alert("5 seconds are up"); 
-      }, 5000);
+        logic.dataload();
+      }, 3000);
+    },
+    dataload:function() {
+      WSS.GET("api/ApiMessage", {}, function(text, data, xml) {
+        if(WSS.isAjaxError()) return false;
+        var _obj = JSON.parse(text);
+        $$("active_condition").setValue(_obj.active_condition);
+        var _largest_message_no = {{largest_message_no}};
+        if(_largest_message_no < _obj.largest_message_no) {
+          WSS.pageMove("messenger/Message");
+        }
+      });
     },
     send:function() {
       var _postData = {

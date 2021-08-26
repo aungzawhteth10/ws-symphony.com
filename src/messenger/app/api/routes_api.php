@@ -8,3 +8,4 @@ $app->post('/messenger/api/ApiDeployTest/post', function () {return 'PostSuccess
 $app->get('/messenger/api/ApiHome', 'MessengerApiHome:init');
 //Message
 $app->post('/messenger/api/ApiMessage/sendMessage', 'MessengerApiMessage:sendMessage');
+$app->get('/messenger/api/ApiMessage', 'MessengerApiMessage:init');

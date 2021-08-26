@@ -2,6 +2,38 @@
 namespace messenger\api;
 class ApiMessage extends ApiBase
 {
+    public function init($request, $response)
+    {
+
+        $message_id = $this->session['message_id'];
+        $user_id    = $this->session['user_id'];
+        $contact_id = $this->session['contact_id'];
+        $cache_file_path = getcwd() . '/src/messenger/app/files/cache/cache.json';
+        $cache = json_decode(file_get_contents($cache_file_path), TRUE);
+        $new_message_file_path = getcwd() . '/src/messenger/app/files/messages/' . $message_id . '.json';
+        $messageData = json_decode(file_get_contents($new_message_file_path), TRUE);
+        if (isset($cache['contactTable'])) {
+            $contactTable = $cache['contactTable'];
+        } else {
+            $contactTable = $this->tablesData->getContactTable();
+            $cache['contactTable'] = $contactTable;
+        }
+        $contactTableByUserId = array_column($contactTable, null, 'user_id');
+        $contactAccessTime = $contactTableByUserId[$contact_id]['access_time'];
+        $timeNow = time();
+        $contactTableByUserId[$user_id]['access_time'] = $timeNow;
+        $cache['contactTable'] = array_values($contactTableByUserId);
+        $json_data = json_encode($cache, JSON_UNESCAPED_UNICODE);
+        file_put_contents($cache_file_path, $json_data);
+        $time_diff = $timeNow - (int)$contactAccessTime;
+        $result = [];
+        $result['active_condition'] = ($time_diff <= 10) ? '<span style="color:green; font-size:200%">●</span>' : '<span style="color:grey; font-size:200%">●</span>';
+        error_log(print_r($result, true));
+        $messagesNosArr = array_column($messageData, 'message_no');
+        rsort($messagesNosArr);
+        $result['largest_message_no'] = $messagesNosArr[0] ?? 0;
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
    public function getMessages()
    {
         $user_id    = $this->session['user_id'];
