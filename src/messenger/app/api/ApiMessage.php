@@ -7,6 +7,7 @@ class ApiMessage extends ApiBase
         $message_id = $this->session['message_id'];
         $user_id    = $this->session['user_id'];
         $contact_id = $this->session['contact_id'];
+        $is_typing = $_GET['isTyping'];
         $cache_file_path = getcwd() . '/src/messenger/app/files/cache/cache.json';
         $cache = json_decode(file_get_contents($cache_file_path), TRUE);
         $new_message_file_path = getcwd() . '/src/messenger/app/files/messages/' . $message_id . '.json';
@@ -19,8 +20,10 @@ class ApiMessage extends ApiBase
         }
         $contactTableByUserId = array_column($contactTable, null, 'user_id');
         $contactAccessTime = $contactTableByUserId[$contact_id]['access_time'];
+        $contactIsTyping   = $contactTableByUserId[$contact_id]['is_typing'];
         $timeNow = time();
         $contactTableByUserId[$user_id]['access_time'] = $timeNow;
+        $contactTableByUserId[$user_id]['is_typing']   = $is_typing;
         $cache['contactTable'] = array_values($contactTableByUserId);
         $json_data = json_encode($cache, JSON_UNESCAPED_UNICODE);
         file_put_contents($cache_file_path, $json_data);
@@ -31,6 +34,7 @@ class ApiMessage extends ApiBase
         $messagesNosArr = array_column($messageData, 'message_no');
         rsort($messagesNosArr);
         $result['largest_message_no'] = $messagesNosArr[0] ?? 0;
+        $result['is_typing'] = $contactIsTyping;
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
    public function getMessages()

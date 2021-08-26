@@ -38,11 +38,13 @@
   var message = {rows:[
 {% for message in messages %}
 {% if message.pos == 'message_left' %}
+    {view:"label", label:"{{contact_name}}"},
     {cols:[
       {view:"textarea", value:"{{message.message}}", width:280, height:{{message.height}}, readonly:true, css:"message_left"},
       {}
     ]},
 {% elseif message.pos == 'message_right' %}
+    {view:"label", label:"Me", align:"right"},
     {cols:[
       {},
       {view:"textarea", value:"{{message.message}}", width:280, height:{{message.height}}, readonly:true, css:"message_right"}
@@ -51,6 +53,7 @@
 {% endfor %}
   ]};
   var text_area = {rows:[
+    {view:"label", id:"txt_typing", label:"{{contact_name}} is typing...", hidden:true},
     {view:"label", label:"စာလုံးရေ(၂၀၀)အထိသာ"},
     {cols:[
       {view:"textarea", id:"send_msg", name:"send_msg", value:"", height:100, attributes:{maxlength:200}},
@@ -67,6 +70,7 @@
       message
     ]};
   var logic = {
+    text:"",
     init:function() {
       $$("form").scrollTo(0, 9000);
       logic.dataload();
@@ -78,9 +82,19 @@
       }, 3000);
     },
     dataload:function() {
-      WSS.GET("api/ApiMessage", {}, function(text, data, xml) {
+      var _getData = {
+        isTyping: (logic.text == $$("send_msg").getValue()) ? "0" : "1"
+      };
+      logic.text = $$("send_msg").getValue();
+      WSS.GET("api/ApiMessage", _getData, function(text, data, xml) {
         if(WSS.isAjaxError()) return false;
         var _obj = JSON.parse(text);
+        console.log(_obj.is_typing);
+        if(_obj.is_typing == "1"){
+          $$("txt_typing").show();
+        }else{
+          $$("txt_typing").hide();
+        }
         $$("active_condition").setValue(_obj.active_condition);
         var _largest_message_no = {{largest_message_no}};
         if(_largest_message_no < _obj.largest_message_no) {
