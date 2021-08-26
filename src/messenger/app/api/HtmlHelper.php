@@ -55,7 +55,7 @@ class HtmlHelper
     }
     public function getUserName($user_id)
     {    
-        $cache_file_path = getcwd() . '\src\messenger\app\files\cache\cache.json';
+        $cache_file_path = getcwd() . '/src/messenger/app/files/cache/cache.json';
         $cache = json_decode(file_get_contents($cache_file_path), TRUE);
         if (isset($cache['loginTable'])) {
             $loginTable = $cache['loginTable'];
