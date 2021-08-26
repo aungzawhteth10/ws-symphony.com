@@ -6,7 +6,7 @@ class ApiLogin extends ApiBase
    {
         $user_name = $_POST['user_name'];
         $password = $_POST['password'];
-        $cache_file_path = getcwd() . '\src\messenger\app\files\cache\cache.json';
+        $cache_file_path = getcwd() . '/src/messenger/app/files/cache/cache.json';
         $cache = json_decode(file_get_contents($cache_file_path), TRUE);
         error_log(print_r($cache, true));
         if (isset($cache['loginTable'])) {
@@ -63,7 +63,7 @@ class ApiLogin extends ApiBase
         //認証キーの有効期間を作成（有効期間：3時間）
         $jikan_24 = time() + (24 * 60 * 60);
         $time_limit = date('Y-m-d H:i:s', $jikan_24);
-        $cache_file_path = getcwd() . '\src\messenger\app\files\cache\cache.json';
+        $cache_file_path = getcwd() . '/src/messenger/app/files/cache/cache.json';
         $cache = json_decode(file_get_contents($cache_file_path), TRUE);
         if (isset($cache['loginTable'])) {
             $loginTable = $cache['loginTable'];
