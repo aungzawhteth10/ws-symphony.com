@@ -4,7 +4,6 @@ class ApiMessage extends ApiBase
 {
     public function init($request, $response)
     {
-
         $message_id = $this->session['message_id'];
         $user_id    = $this->session['user_id'];
         $contact_id = $this->session['contact_id'];
