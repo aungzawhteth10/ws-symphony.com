@@ -60,7 +60,6 @@ function _screenInit ($screenId, $token, $view, $response)
         return _pageMove ($view, $response, 'Message', ['contact_name' => $contact_name, 'messages' => $messages, 'largest_message_no' => $messageNosArr[0] ?? 0]);
     }
     $sessionArr = $_SESSION;
-    // return $sessionArr;
     error_log(print_r($sessionArr, true));
     $view->offsetSet('HtmlHelper', new \messenger\api\HtmlHelper);
     $view->offsetSet('session', json_encode($sessionArr, JSON_UNESCAPED_UNICODE));
