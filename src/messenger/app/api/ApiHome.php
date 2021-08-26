@@ -5,7 +5,7 @@ class ApiHome extends ApiBase
    public function init($request, $response)
    {
         $user_id = $this->session['user_id'];
-        $cache_file_path = getcwd() . '\src\messenger\app\files\cache\cache.json';
+        $cache_file_path = getcwd() . '/src/messenger/app/files/cache/cache.json';
         $cache = json_decode(file_get_contents($cache_file_path), TRUE);
         if (isset($cache['loginTable'])) {
             $loginTable = $cache['loginTable'];
