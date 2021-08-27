@@ -48,7 +48,7 @@ class ApiHome extends ApiBase
             $contactResult = $contactTableByUserId[$contact_id];
             $contactAccessTime = $contactResult['access_time'];
             $time_diff = $timeNow - (int)$contactAccessTime;
-            if ($timeNow - (int)$contactAccessTime <= 10) {
+            if ($timeNow - (int)$contactAccessTime <= 5) {
                 $result[] = [
                     'contact_id'   => $contact_id,
                     'contact_name' => $contactInfo['user_name'],
