@@ -29,7 +29,7 @@ class ApiMessage extends ApiBase
         file_put_contents($cache_file_path, $json_data);
         $time_diff = $timeNow - (int)$contactAccessTime;
         $result = [];
-        $result['active_condition'] = ($time_diff <= 10) ? '<span style="color:green; font-size:200%">●</span>' : '<span style="color:grey; font-size:200%">●</span>';
+        $result['active_condition'] = ($time_diff <= 5) ? '<span style="color:green; font-size:200%">●</span>' : '<span style="color:grey; font-size:200%">●</span>';
         error_log(print_r($result, true));
         $messagesNosArr = array_column($messageData, 'message_no');
         rsort($messagesNosArr);
