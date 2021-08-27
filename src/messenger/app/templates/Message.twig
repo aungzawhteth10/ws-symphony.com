@@ -74,6 +74,8 @@
     init:function() {
       $$("form").scrollTo(0, 9000);
       logic.dataload();
+      $$("send_msg").setValue(webix.storage.session.get("{{user_id}}#{{contact_id}}"));
+      logic.text = webix.storage.session.get("{{user_id}}#{{contact_id}}");
       logic.startTimer();
     },
     startTimer:function() {
@@ -98,6 +100,7 @@
         $$("active_condition").setValue(_obj.active_condition);
         var _largest_message_no = {{largest_message_no}};
         if(_largest_message_no < _obj.largest_message_no) {
+          webix.storage.session.put("{{user_id}}#{{contact_id}}", $$("send_msg").getValue());
           WSS.pageMove("messenger/Message");
         }
       });
@@ -112,6 +115,7 @@
             WSS.errorMessage("Send Failed");
             return false;
         }
+        webix.storage.session.put("{{user_id}}#{{contact_id}}", "");
         WSS.pageMove("messenger/Message");
       });
     },
