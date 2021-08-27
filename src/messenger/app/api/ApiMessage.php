@@ -111,7 +111,7 @@ class ApiMessage extends ApiBase
         $messageArr[] = [
             'message_no' => $largest_message_no + 1,
             'user_id'    => $user_id,
-            'message'    => $message,
+            'message'    => preg_replace("/\r|\n/", "", $message),
         ];
         $json_data = json_encode($messageArr, JSON_UNESCAPED_UNICODE);
         file_put_contents($message_file_path, $json_data);

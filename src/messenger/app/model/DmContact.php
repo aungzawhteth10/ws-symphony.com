@@ -6,6 +6,7 @@ class DmContact extends DataModel
         'user_id'     => 'integer',//ユーザID
         'contacts'    => 'string', //連絡先リスト
         'access_time' => 'string', //アクセス時刻
+        'is_typing'   => 'string', //タイピングフラグ
     ];
     public static $primary_key = [
         'user_id',//ユーザID
