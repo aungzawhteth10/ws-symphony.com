@@ -72,6 +72,7 @@
   var logic = {
     text:"",
     init:function() {
+      $$("btn_back").attachEvent("onItemClick", logic.toBack);
       $$("form").scrollTo(0, 9000);
       logic.dataload();
       $$("send_msg").setValue(webix.storage.session.get("{{user_id}}#{{contact_id}}"));
@@ -118,6 +119,10 @@
         webix.storage.session.put("{{user_id}}#{{contact_id}}", "");
         WSS.pageMove("messenger/Message");
       });
+    },
+    toBack:function() {
+      webix.storage.session.put("{{user_id}}#{{contact_id}}", $$("send_msg").getValue());
+      WSS.pageMove("messenger/Home");
     },
     pageMove:function(page) {
       WSS.pageMove(page);
