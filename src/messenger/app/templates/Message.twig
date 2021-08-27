@@ -107,9 +107,11 @@
       });
     },
     send:function() {
+      var message = $$("send_msg").getValue();
+      if(message == "") return false;
       var _postData = {
         largest_message_no: {{largest_message_no}},
-        message: $$("send_msg").getValue(),
+        message: message
       };
       WSS.POST("api/ApiMessage/sendMessage", _postData, function(data) {
         if (WSS.isAjaxError()) {
