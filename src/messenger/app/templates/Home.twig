@@ -62,7 +62,7 @@ div.webix_ss_header {
     dataSync:function() {
       timer = setInterval(function() { 
           logic.dataload();
-      }, 5000);
+      }, 1000);
     },
     toMessage:function(contact_id) {
       WSS.pageMove("messenger/Message", {"contact_id" : contact_id});
