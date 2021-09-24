@@ -1,12 +1,14 @@
 {% include "base.html"%}
 {% set screen_data = screen_data %}
 <style>
-.message_left .webix_inp_textarea {
+.message_left {
+  margin: 0px !important;
   color: #1547f8 !important;
   background-color: #efd3ce !important;
   padding: 2px !important;
 }
-.message_right .webix_inp_textarea {
+.message_right {
+  margin: 0px !important;
   color: #1547f8 !important;
   background-color: #e8f8d1 !important;
   padding: 2px !important;
@@ -40,21 +42,20 @@
 {% if message.pos == 'message_left' %}
     {view:"label", label:"{{contact_name}}"},
     {cols:[
-      {view:"textarea", value:"{{message.message}}", width:280, height:{{message.height}}, readonly:true, css:"message_left"},
+      {view:"template", template:"<p style='margin: 0px;'>{{message.message}}</p>", width:280, autoheight:true, css:"message_left"},
       {}
     ]},
 {% elseif message.pos == 'message_right' %}
     {view:"label", label:"Me", align:"right"},
     {cols:[
       {},
-      {view:"textarea", value:"{{message.message}}", width:280, height:{{message.height}}, readonly:true, css:"message_right"}
+      {view:"template", template:"<p style='margin: 0px;'>{{message.message}}</p>", width:280, autoheight:true, css:"message_right"}
     ]},
 {% endif %}
 {% endfor %}
   ]};
   var text_area = {rows:[
-    {view:"label", id:"txt_typing", label:"{{contact_name}} is typing...", hidden:true},
-    {view:"label",label:"", width:38},
+    {view:"label", id:"txt_typing", label:""},
     {view:"label", label:"စာလုံးရေ(၂၀၀)အထိသာ"},
     {cols:[
       {view:"textarea", id:"send_msg", name:"send_msg", value:"", height:100, attributes:{maxlength:200}},
@@ -95,9 +96,9 @@
         var _obj = JSON.parse(text);
         console.log(_obj.is_typing);
         if(_obj.is_typing == "1"){
-          $$("txt_typing").show();
+          $$("txt_typing").setValue("{{contact_name}} is typing...");
         }else{
-          $$("txt_typing").hide();
+          $$("txt_typing").setValue("");
         }
         $$("active_condition").setValue(_obj.active_condition);
         var _largest_message_no = {{largest_message_no}};
