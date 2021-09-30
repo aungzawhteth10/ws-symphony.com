@@ -1,6 +1,15 @@
 {% include "base.html"%}
 {% set screen_data = screen_data %}
 <style>
+.bk_img {
+  background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/90b4db6e-3d5e-4236-8250-a9a6fef0ef4a/daf3urx-c7669ee1-860e-4236-9d70-c056b1d2807d.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi85MGI0ZGI2ZS0zZDVlLTQyMzYtODI1MC1hOWE2ZmVmMGVmNGEvZGFmM3VyeC1jNzY2OWVlMS04NjBlLTQyMzYtOWQ3MC1jMDU2YjFkMjgwN2QuanBnIn1dXX0.x2bUzW5UPi6Z1vHJ1KE4NK02qRdIsOUwuVxTHJeif84');
+  background-size: 300px;
+  width: 300px;
+  height: 300px;
+  border: 2px solid;
+  text-shadow: white 0px 0px 2px;
+  font-size: 16px;
+}
 .message_left {
   border-radius: 30px;
   margin: 0px !important;
@@ -29,6 +38,9 @@
   color: #ffffff !important;
   background: #b2b6b8 !important;
   font-size: 250%;
+}
+.eighty {
+  width: 30%;
 }
 </style>
 <script>
@@ -70,6 +82,7 @@
     id:"form",
     borderless:true,
     scroll:true,
+    css:"bk_img",
     elements:[
       message
     ]};
