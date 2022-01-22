@@ -15,7 +15,7 @@ h2{
 }
 div.banner{
 	height: 50px;
-	background-color: black;
+	background-color: #131212;
 	text-align: center;
 }
 .webix_template{
@@ -34,5 +34,5 @@ a {
   text-decoration: none;
 }
 .webix_view {
-  background-color: black !important;
+  background-color: #131212 !important;
 }
