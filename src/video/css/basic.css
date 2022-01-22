@@ -36,7 +36,7 @@ a {
 .webix_view {
   background-color: #131212 !important;
 }
-.time {
+span.time {
   background-color: #544f4f;
   border-radius: 20%;
 }
