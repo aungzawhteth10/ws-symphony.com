@@ -1,0 +1,38 @@
+div.logo{
+	background-image: url('../images/logo.png');
+	float: left;
+	display:inline-block;
+	width: 60px;
+	height: 50px;
+	margin-left: auto;
+	margin-right: auto;
+}
+h2{
+	margin: 0;
+	padding-top: 10px;
+	color: #6161A7;
+	height: 50px;
+}
+div.banner{
+	height: 50px;
+	background-color: black;
+	text-align: center;
+}
+.webix_template{
+  color: green !important;
+  font-size: 20px;
+  text-decoration: none;
+}
+.webix_view.webix_label{
+  color: white !important;
+}
+div {
+  word-wrap: break-word;
+}
+a {
+  color: green;
+  text-decoration: none;
+}
+.webix_view {
+  background-color: black !important;
+}

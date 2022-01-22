@@ -5,7 +5,7 @@
     },
     "autoload": {
         "psr-4": {
-            "messenger\\": "src/messenger/app"
+            "video\\": "src/video/app"
         }
     }
 }

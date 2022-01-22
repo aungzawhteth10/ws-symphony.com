@@ -1,0 +1,43 @@
+{% include "base.html"%}
+{% set screen_data = screen_data %}
+{%
+  set video_data = "<a href='http://192.168.2.106:8888/src/video/videos/naruto.jpg'><div class='video'><img src='src/video/videos/naruto.jpg' class='pic'></div>Naruto</a><a href='https://media.comicbook.com/2021/01/boruto-manga-chapter-54-spoilers-sasuke-eye-injury-sharingan-rin-1253618.jpeg?auto=webp&width=1200&height=624&crop=1200:624,smart'><div class='video'><img src='https://media.comicbook.com/2021/01/boruto-manga-chapter-54-spoilers-sasuke-eye-injury-sharingan-rin-1253618.jpeg?auto=webp&width=1200&height=624&crop=1200:624,smart' class='pic'></div>Sasuke</a><a href='https://besthqwallpapers.com/Uploads/28-11-2019/113198/thumb2-hinata-hyuga-uzumaki-hinata-naruto-characters-hyuga-spring.jpg'><div class='video'><img src='https://besthqwallpapers.com/Uploads/28-11-2019/113198/thumb2-hinata-hyuga-uzumaki-hinata-naruto-characters-hyuga-spring.jpg' class='pic'></div>Hinata</a><a href='https://www.almightyboy.com/wp-content/uploads/2021/05/a1223.jpg'><div class='video'><img src='https://www.almightyboy.com/wp-content/uploads/2021/05/a1223.jpg' class='pic'></div>Himawari</a><a href='https://www.almightyboy.com/wp-content/uploads/2021/07/a55.jpg'><div class='video'><img src='https://www.almightyboy.com/wp-content/uploads/2021/07/a55.jpg' class='pic'></div>Uzumaki Family</a>"
+%}
+
+<style>
+  .pic {
+    width: 300px;
+    height: 200px;
+  }
+  .title{
+    text-decoration: none;
+  }
+</style>
+<script>
+  var form = {
+    view:"form",
+    id:"form",
+    borderless:true,
+    elements:[
+      {rows:[
+        {template:"{{video_data|raw}}", borderless:true, scroll:true},
+      ]}
+
+  ]};
+  var logic = {
+    init:function() {
+    },
+    pageMove:function(page) {
+      WSS.pageMove(page);
+    }
+  };
+  webix.ready(function () {
+    webix.ui(
+      {rows:[
+        form,
+        {height:50}
+      ]}
+    );
+    logic.init();
+  });
+</script>

@@ -8,5 +8,9 @@ require __DIR__ . '/bootstrap/app.php';
 // require __DIR__ . '/src/messenger/app_messenger.php';
 // require __DIR__ . '/src/messenger/app/ui/routes_ui.php';
 // require __DIR__ . '/src/messenger/app/api/routes_api.php';
+//video
+require __DIR__ . '/src/video/app_video.php';
+require __DIR__ . '/src/video/app/ui/routes_ui.php';
+require __DIR__ . '/src/video/app/api/routes_api.php';
 
 $app->run();
