@@ -1,0 +1,43 @@
+{% include "base.html"%}
+{% set screen_data = screen_data %}
+{%
+  set video_data = " <video width='320' height='240' controls><source src='../src/video/videos/00001.mp4' type='video/mp4'>Your browser does not support the video tag.</video> "
+%}
+
+<style>
+  .pic {
+    width: 300px;
+    height: 200px;
+  }
+  .title{
+    text-decoration: none;
+  }
+</style>
+<script>
+  var form = {
+    view:"form",
+    id:"form",
+    borderless:true,
+    elements:[
+      {rows:[
+        {template:"{{video_data|raw}}", borderless:true, scroll:true},
+      ]}
+
+  ]};
+  var logic = {
+    init:function() {
+    },
+    pageMove:function(page) {
+      WSS.pageMove(page);
+    }
+  };
+  webix.ready(function () {
+    webix.ui(
+      {rows:[
+        form,
+        {height:50}
+      ]}
+    );
+    logic.init();
+  });
+</script>

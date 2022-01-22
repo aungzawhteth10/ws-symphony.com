@@ -9,9 +9,11 @@ $app->get('/{id}/', function ($request, $response, $args) {
 $app->get('/', function ($request, $response, $args) {
     return redirect('/video');
 });
+$app->get('/video/{id}/', function ($request, $response, $args) {
+    return redirect('/video/' . $args['id']);
+});
 $app->get('/video/{id}', function ($request, $response, $args) {
-    if ($args['id'] == 'o2_division') renderO2Division(); 
-    return $this->viewVideo->render($response, $args['id'] . '.twig', []);
+    return $this->viewVideo->render($response, 'video.twig', []);
 });
 /*
  * リダイレクトする
@@ -22,12 +24,3 @@ function redirect ($url, $token = '')
 {
     return '<script>location.href= "'. $url . '"</script>';
 }
-/*
- * o2_division 画面の情報を返す
- * @return ResponseInterface o2_division 画面の情報
- */
-function renderO2Division () 
-{
-    return '<script>location.href= "'. $url . '"</script>';
-}
-
