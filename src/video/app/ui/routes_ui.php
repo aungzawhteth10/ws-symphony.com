@@ -6,6 +6,9 @@ $app->get('/video', function ($request, $response) {
 $app->get('/{id}/', function ($request, $response, $args) {
     return redirect('/' . $args['id']);
 });
+$app->get('/', function ($request, $response, $args) {
+    return redirect('/video');
+});
 $app->get('/video/{id}', function ($request, $response, $args) {
     if ($args['id'] == 'o2_division') renderO2Division(); 
     return $this->viewVideo->render($response, $args['id'] . '.twig', []);
