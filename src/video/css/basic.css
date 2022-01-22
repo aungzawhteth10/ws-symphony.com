@@ -37,6 +37,6 @@ a {
   background-color: #131212 !important;
 }
 span.time {
-  background-color: #544f4f;
-  border-radius: 20%;
+  background-color: #544f4f !important;
+  border-radius: 20% !important;
 }
