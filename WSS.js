@@ -1,4 +1,5 @@
 var WSS = WSS || {};
+WSS.footer = {template:"<footer>&copyHdKyiKyi.com, 2022</footer>", height:70, borderless:true, css:"footer"};
 WSS.session = {};
 WSS.token = "";
 WSS.init = function() {

@@ -40,3 +40,8 @@ span.time {
   background-color: grey !important;
   border-radius: 20% !important;
 }
+footer {
+  text-align: center;
+  font-size: 10px;
+  color: white !important;
+}
