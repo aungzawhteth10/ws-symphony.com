@@ -1,5 +1,5 @@
 <?php
-$app->get('/video', function ($request, $response) {
+/*$app->get('/video', function ($request, $response) {
     error_log(print_r(strtolower($_SERVER['HTTP_USER_AGENT']), true));
     $video_template = createVideoTamplate();
     return $this->viewVideo->render($response, 'index.twig', ['video_template' => $video_template]);
@@ -15,7 +15,7 @@ $app->get('/video/{id}/', function ($request, $response, $args) {
 });
 $app->get('/video/{id}', function ($request, $response, $args) {
     return $this->viewVideo->render($response, 'video.twig', []);
-});
+});*/
 /*
  * リダイレクトする
  * @param  String リダイレクトするURL
