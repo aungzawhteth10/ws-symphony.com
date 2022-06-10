@@ -1,6 +1,6 @@
 <?php
 $app->get('/sakura_s9/myanmar_menu', function ($request, $response, $args) {
-    return redirect('/sakura_s9/myanmar menu.pdf?' . date());
+    return redirect('/sakura_s9/myanmar menu.pdf?' . date().timestamp);
 });
 /*$app->get('/video', function ($request, $response) {
     error_log(print_r(strtolower($_SERVER['HTTP_USER_AGENT']), true));
